@@ -3,17 +3,17 @@ from bs4 import BeautifulSoup
 import json
 
 # Send a GET request
-url = "https://zety.com/resume-examples"
+url = "https://resumegenius.com/resume-samples"
 response = requests.get(url)
 
 # Parse the HTML content
 soup = BeautifulSoup(response.content, "html.parser")
 
 # Find the div with class 'categories'
-categories_div = soup.find("div", class_="categories")
+categories_div = soup.find("section", id="categories")
 
 # Find the ul with class 'categories__list' inside the categories_div
-ul = categories_div.find("ul", class_="categories__list")
+ul = categories_div.find("ul", class_="category-list")
 
 # Initialize a dictionary to store categories and their data
 categories_data = {}
@@ -21,10 +21,10 @@ categories_data = {}
 # Find and extract category information
 for li in ul.find_all("li"):
     # Extract the category ID from the 'data-category' attribute
-    category_id = li.get("data-category")
+    category_id = li.find("a").get('href')[1:]
 
     # Extract the category title from the span with class 'categories__label'
-    category_title = li.find("span", class_="categories__label").text
+    category_title = li.find("span").text
 
     # Store the relative URL only, no need to prepend the base URL
     category_data = {
@@ -38,8 +38,9 @@ for li in ul.find_all("li"):
     # Find subcategories and extract the text and href
     subcategories = {}
     for sub_li in category_div.find_all("li"):
-        subcategory_text = sub_li.text
-        subcategory_relative_url = sub_li.find("a")["href"]
+        li = sub_li.find("a")
+        subcategory_text = li.text
+        subcategory_relative_url = li["href"]
         
         # Store the relative URL only, no need to prepend the base URL
         subcategory_data = {
@@ -90,5 +91,3 @@ print("Category data saved to categories.json")
 #     json.dump(subcategories_data, json_file, indent=4)
 
 # print("Resume data saved to resumes.json")
-
-
