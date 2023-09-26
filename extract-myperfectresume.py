@@ -4,7 +4,8 @@ import json
 
 # Send a GET request
 url = "https://www.myperfectresume.com/resume/examples"
-response = requests.get(url)
+response = requests.get(url, allow_redirects=True, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"})
+
 print(response.content)
 
 # Parse the HTML content
@@ -56,7 +57,7 @@ for li in ul.find_all("li"):
     categories_data[category_title] = category_data
 
 # Save the categories_data dictionary as a JSON file
-with open("data/categories.json", "w") as json_file:
+with open("data/myperfectresume.json", "w") as json_file:
     json.dump(categories_data, json_file, indent=4)
 
 print("Category data saved to categories.json")

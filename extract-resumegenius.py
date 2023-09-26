@@ -40,11 +40,11 @@ for li in ul.find_all("li"):
     for sub_li in category_div.find_all("li"):
         li = sub_li.find("a")
         subcategory_text = li.text
-        subcategory_relative_url = li["href"]
+        subcategory_relative_url = li.get('href')
         
         # Store the relative URL only, no need to prepend the base URL
         subcategory_data = {
-            "url": subcategory_relative_url
+            "url": subcategory_relative_url.replace('https://resumegenius.com', '')
         }
         subcategories[subcategory_text] = subcategory_data
 
@@ -55,7 +55,7 @@ for li in ul.find_all("li"):
     categories_data[category_title] = category_data
 
 # Save the categories_data dictionary as a JSON file
-with open("data/categories.json", "w") as json_file:
+with open("data/resumegenius.json", "w") as json_file:
     json.dump(categories_data, json_file, indent=4)
 
 print("Category data saved to categories.json")

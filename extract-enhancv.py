@@ -58,7 +58,7 @@ for li in categories_div.find_all(recursive=False):
     categories_data[category_title] = category_data
 
 # Save the categories_data dictionary as a JSON file
-with open("data/categories.json", "w") as json_file:
+with open("data/enhancv.json", "w") as json_file:
     json.dump(categories_data, json_file, indent=4)
 
 print("Category data saved to categories.json")

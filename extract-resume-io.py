@@ -48,7 +48,7 @@ for li in categories_div:
         
         # Store the relative URL only, no need to prepend the base URL
         subcategory_data = {
-            "url": subcategory_relative_url
+            "url": subcategory_relative_url.replace('https://resume.io', '')
         }
         subcategories[subcategory_text] = subcategory_data
 
@@ -59,7 +59,7 @@ for li in categories_div:
     categories_data[category_title] = category_data
 
 # Save the categories_data dictionary as a JSON file
-with open("data/categories.json", "w") as json_file:
+with open("data/resumeio.json", "w") as json_file:
     json.dump(categories_data, json_file, indent=4)
 
 print("Category data saved to categories.json")
